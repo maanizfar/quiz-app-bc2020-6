@@ -1,10 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import QuizCard from "./QuizCard";
+import { Typography, Container } from "@material-ui/core";
 import { useHistory } from "react-router";
 
+import QuizCard from "./QuizCard";
 import { shuffleArray } from "../../utils/utils";
 import MyButton from "../MyButton";
+import { Categories } from "../../utils/categories";
+
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  container: {
+    // backgroundColor: theme.palette.common.white,
+  },
+
+  heading: {
+    marginBottom: theme.spacing(4),
+    marginTop: theme.spacing(4),
+  },
+}));
 
 const QuizPage = () => {
   const [questions, setQuestions] = useState([]);
@@ -13,45 +28,59 @@ const QuizPage = () => {
 
   const location = useLocation();
   const history = useHistory();
+  const classes = useStyles();
+
+  const searchParams = new URLSearchParams(location.search);
+
+  const endPoint = `https://opentdb.com/api.php?amount=10&type=multiple&category=${searchParams.get(
+    "category"
+  )}&difficulty=${searchParams.get("difficulty")}`;
 
   useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-
-    const endPoint = `https://opentdb.com/api.php?amount=10&type=multiple&category=${searchParams.get(
-      "category"
-    )}&difficulty=${searchParams.get("difficulty")}`;
-
     fetch(endPoint)
       .then((res) => res.json())
       .then((json) => setQuestions(json.results));
-  }, [location]);
+  }, [endPoint]);
 
   if (questions.length < 1) return <div>Loading</div>;
 
-  if (currentQuestion > 9) {
-    return (
-      <div>
-        <h3>Quiz Ended</h3>
-        <p>Score is {score}</p>
-        <MyButton label="Home" onClick={() => history.push("/")} />
-      </div>
-    );
+  let question = questions[currentQuestion];
+  let choices: string[] = [];
+  let correctAnswer: string = "";
+
+  if (question) {
+    choices = question["incorrect_answers"];
+    correctAnswer = question["correct_answer"];
+
+    if (!choices.includes(correctAnswer)) choices.push(correctAnswer);
+
+    choices = shuffleArray(choices);
   }
 
-  let question = questions[currentQuestion];
-  let choices: string[] = question["incorrect_answers"];
-  let correctAnswer: string = question["correct_answer"];
-
-  if (!choices.includes(correctAnswer)) choices.push(correctAnswer);
-
-  choices = shuffleArray(choices);
-
   return (
-    <QuizCard
-      question={question["question"]}
-      choices={choices}
-      onSubmit={handleSubmit}
-    />
+    <Container maxWidth="md" className={classes.container}>
+      <Typography
+        variant="h3"
+        component="h3"
+        align="center"
+        className={classes.heading}
+      >
+        {getCatergoryName()}
+      </Typography>
+      {currentQuestion > 9 ? (
+        <div>
+          <h3>Quiz Ended</h3>
+          <p>Score is {score}</p>
+          <MyButton label="Home" onClick={() => history.push("/")} />
+        </div>
+      ) : (
+        <QuizCard
+          question={question["question"]}
+          choices={choices}
+          onSubmit={handleSubmit}
+        />
+      )}
+    </Container>
   );
 
   function handleSubmit(selectedChoice: string) {
@@ -60,6 +89,31 @@ const QuizPage = () => {
     }
 
     setCurrentQuestion(currentQuestion + 1);
+  }
+
+  function getCatergoryName(): string {
+    switch (searchParams.get("category")) {
+      case Categories.Computers:
+        return "Computers";
+
+      case Categories.GeneralKnowledge:
+        return "General Knowledge";
+
+      case Categories.Geography:
+        return "Geography";
+
+      case Categories.History:
+        return "History";
+
+      case Categories.Music:
+        return "Music";
+
+      case Categories.ScienceAndNature:
+        return "Science & Nature";
+
+      default:
+        return "";
+    }
   }
 };
 

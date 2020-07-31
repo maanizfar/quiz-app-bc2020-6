@@ -2,16 +2,14 @@ import React, { useState } from "react";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Radio from "@material-ui/core/Radio";
 import Grid from "@material-ui/core/Grid";
-import CheckIcon from "@material-ui/icons/Check";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router";
 
 import MyButton from "../MyButton";
-import RadioButton from "./RadioButton";
+import RadioButton from "../RadioButton";
+import { Categories } from "../../utils/categories";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -23,25 +21,11 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
   },
 
-  radioButton: {
-    backgroundColor: theme.palette.secondary.main,
-    color: theme.palette.primary.main,
-    borderRadius: 8,
-    border: `2px solid`,
-    width: "100%",
-  },
-
-  radio: {
-    marginRight: 8,
-  },
-
   btnContainer: {
     display: "flex",
     justifyContent: "center",
   },
 }));
-
-const EmptyIcon = () => <div style={{ width: "24px", height: "24px" }}></div>;
 
 const MainForm = () => {
   const [category, setCategory] = useState("9");
@@ -63,22 +47,28 @@ const MainForm = () => {
         >
           <Grid container spacing={2} className={classes.radioButtonContainer}>
             <Grid item xs={12} sm={6} md={4}>
-              <RadioButton value="9" label="General Knowledge" />
+              <RadioButton
+                value={Categories.GeneralKnowledge}
+                label="General Knowledge"
+              />
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
-              <RadioButton value="18" label="Computers" />
+              <RadioButton value={Categories.Computers} label="Computers" />
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
-              <RadioButton value="23" label="History" />
+              <RadioButton value={Categories.History} label="History" />
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
-              <RadioButton value="12" label="Music" />
+              <RadioButton value={Categories.Music} label="Music" />
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
-              <RadioButton value="17" label="Science & Nature" />
+              <RadioButton
+                value={Categories.ScienceAndNature}
+                label="Science & Nature"
+              />
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
-              <RadioButton value="22" label="Geography" />
+              <RadioButton value={Categories.Geography} label="Geography" />
             </Grid>
           </Grid>
         </RadioGroup>
