@@ -23,5 +23,10 @@ export const theme = createMuiTheme({
         fontSize: "2.25rem",
       },
     },
+    button: {
+      "@media (max-width: 600px)": {
+        fontSize: "0.75rem",
+      },
+    },
   },
 });

@@ -3,8 +3,7 @@ import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
 import { useHistory } from "react-router";
 import { makeStyles } from "@material-ui/core/styles";
-
-import MyButton from "../MyButton";
+import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -40,7 +39,13 @@ const ResultCard = ({ score }: Props) => {
       </Typography>
 
       <div className={classes.btnContainer}>
-        <MyButton label="Home" onClick={() => history.push("/")} />
+        <Button
+          onClick={() => history.push("/")}
+          color="primary"
+          variant="contained"
+        >
+          Home
+        </Button>
       </div>
     </Card>
   );
