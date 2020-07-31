@@ -8,7 +8,7 @@ type Props = {
 
 const MyButton = ({ label, onClick }: Props) => {
   return (
-    <Button variant="contained" onClick={onClick}>
+    <Button variant="contained" onClick={onClick} color="primary">
       {label}
     </Button>
   );
