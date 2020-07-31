@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Typography, Container } from "@material-ui/core";
-import { useHistory } from "react-router";
 
 import QuizCard from "./QuizCard";
 import { shuffleArray } from "../../utils/utils";
-import MyButton from "../MyButton";
 import { Categories } from "../../utils/categories";
+import ResultCard from "./ResultCard";
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -27,7 +26,6 @@ const QuizPage = () => {
   const [score, setScore] = useState(0);
 
   const location = useLocation();
-  const history = useHistory();
   const classes = useStyles();
 
   const searchParams = new URLSearchParams(location.search);
@@ -38,8 +36,14 @@ const QuizPage = () => {
 
   useEffect(() => {
     fetch(endPoint)
-      .then((res) => res.json())
-      .then((json) => setQuestions(json.results));
+      .then((res) => {
+        console.log(res);
+        return res.json();
+      })
+      .then((json) => {
+        console.log(json);
+        setQuestions(json.results);
+      });
   }, [endPoint]);
 
   if (questions.length < 1) return <div>Loading</div>;
@@ -68,13 +72,10 @@ const QuizPage = () => {
         {getCatergoryName()}
       </Typography>
       {currentQuestion > 9 ? (
-        <div>
-          <h3>Quiz Ended</h3>
-          <p>Score is {score}</p>
-          <MyButton label="Home" onClick={() => history.push("/")} />
-        </div>
+        <ResultCard score={score} />
       ) : (
         <QuizCard
+          no={currentQuestion + 1}
           question={question["question"]}
           choices={choices}
           onSubmit={handleSubmit}

@@ -7,6 +7,7 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import Radio from "@material-ui/core/Radio";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
+import ReactHtmlParser from "react-html-parser";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -24,20 +25,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 type QuizProps = {
+  no: number;
   question: string;
   choices: string[];
   onSubmit: (selection: string) => void;
 };
 
-const QuizCard = ({ question, choices, onSubmit }: QuizProps) => {
+const QuizCard = ({ question, choices, no, onSubmit }: QuizProps) => {
   const classes = useStyles();
   const [selection, setSelection] = useState("");
 
   return (
     <Card className={classes.container}>
-      {/* <CardContent> */}
+      <Typography variant="body1" align="right">
+        {no}/10
+      </Typography>
       <Typography component="h5" variant="h5" gutterBottom>
-        {question}
+        {ReactHtmlParser(question)}
       </Typography>
 
       <FormControl component="fieldset" className={classes.choicesContainer}>
@@ -52,7 +56,7 @@ const QuizCard = ({ question, choices, onSubmit }: QuizProps) => {
               key={choice}
               value={choice}
               control={<Radio color="primary" />}
-              label={choice}
+              label={ReactHtmlParser(choice)}
             />
           ))}
         </RadioGroup>
@@ -62,11 +66,11 @@ const QuizCard = ({ question, choices, onSubmit }: QuizProps) => {
           variant="contained"
           disabled={!selection}
           onClick={() => handleSubmit()}
+          color="primary"
         >
           Submit
         </Button>
       </div>
-      {/* </CardContent> */}
     </Card>
   );
 
