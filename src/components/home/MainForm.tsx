@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import Grid from "@material-ui/core/Grid";
-
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router";
-
 import CategoryItem from "./CategoryItem";
 import { Categories } from "../../utils/categories";
 import DifficultyButton from "./DifficultyButton";

@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     backgroundColor: theme.palette.background.default,
     minHeight: "100vh",
+    overflow: "hidden",
   },
 
   heading: {
@@ -44,11 +45,9 @@ const QuizPage = () => {
   useEffect(() => {
     fetch(endPoint)
       .then((res) => {
-        console.log(res);
         return res.json();
       })
       .then((json) => {
-        console.log(json);
         setQuestions(json.results);
       });
   }, [endPoint]);
