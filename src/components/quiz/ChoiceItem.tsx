@@ -5,7 +5,7 @@ import ReactHtmlParser from "react-html-parser";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    heigth: "100%",
+    height: "100%",
     minHeight: 80,
     padding: theme.spacing(2),
 
@@ -16,20 +16,11 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: (props: Props) =>
       props.active ? theme.palette.primary.main : theme.palette.secondary.main,
 
-    // background: (props: Props) =>
-    //   props.active
-    //     ? `linear-gradient(to right, ${theme.palette.primary.dark} 0%, ${theme.palette.primary.main} 100%)`
-    //     : `linear-gradient(to right, ${theme.palette.secondary.main} 0%, ${theme.palette.secondary.dark} 100%)`,
-
     boxShadow: (props: Props) =>
-      props.active ? "none" : "2px 2px 4px 0px rgba(132,88,179,0.4)",
+      props.active ? "none" : `2px 2px 4px 0px ${theme.palette.secondary.dark}`,
 
     transform: (props: Props) => (props.active ? "scale(0.99)" : "scale(1)"),
-    transition: "all 0.5s",
-
-    // borderWidth: "1px",
-    // borderStyle: "solid",
-    // borderColor: theme.palette.primary.main,
+    transition: "all 0.25s",
 
     cursor: "pointer",
     color: theme.palette.common.white,
@@ -37,10 +28,6 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("xs")]: {
       padding: theme.spacing(1),
     },
-  },
-
-  label: {
-    // marginTop: theme.spacing(1),
   },
 }));
 
@@ -59,12 +46,7 @@ const ChoiceItem = (props: Props) => {
       className={classes.container}
       onClick={() => props.onClick(props.value)}
     >
-      <Typography
-        variant="body1"
-        component="p"
-        align="center"
-        className={classes.label}
-      >
+      <Typography variant="body1" component="p" align="center">
         {ReactHtmlParser(props.label)}
       </Typography>
     </div>

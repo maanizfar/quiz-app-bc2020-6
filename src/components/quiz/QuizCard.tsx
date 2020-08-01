@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
-import FormControl from "@material-ui/core/FormControl";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, Grid } from "@material-ui/core";
+import Slide from "@material-ui/core/Slide";
 import ReactHtmlParser from "react-html-parser";
 import ChoiceItem from "./ChoiceItem";
 
@@ -32,14 +32,14 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     padding: theme.spacing(2),
     backgroundColor: theme.palette.secondary.dark,
-    // background: `radial-gradient(ellipse, ${theme.palette.primary.light} 0%, ${theme.palette.primary.dark} 100%)`,
-
     color: theme.palette.common.white,
     minHeight: 180,
   },
 
   choicesContainer: {
     padding: theme.spacing(1),
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
     backgroundColor: theme.palette.common.white,
   },
 }));
@@ -55,26 +55,27 @@ type QuizProps = {
 const QuizCard = ({ question, choices, no, score, onSubmit }: QuizProps) => {
   const classes = useStyles();
   const [selection, setSelection] = useState("");
+  const [submitted, setSubmitted] = useState(false);
 
   return (
-    <Card className={classes.container}>
-      <div className={classes.topBanner}>
-        <Typography variant="body1" align="center">
-          Q#: <strong>{no}/10</strong>
-        </Typography>
-        <Typography variant="body1" align="center">
-          Score: <strong>{score}</strong>
-        </Typography>
-      </div>
+    <Slide direction="left" in={!submitted} mountOnEnter unmountOnExit>
+      <Card className={classes.container}>
+        <div className={classes.topBanner}>
+          <Typography variant="body1" align="center">
+            Q#: <strong>{no}/10</strong>
+          </Typography>
+          <Typography variant="body1" align="center">
+            Score: <strong>{score}</strong>
+          </Typography>
+        </div>
 
-      <div className={classes.questionContainer}>
-        <Typography component="h6" variant="h6" align="center">
-          {ReactHtmlParser(question)}
-        </Typography>
-      </div>
+        <div className={classes.questionContainer}>
+          <Typography component="h6" variant="h6" align="center">
+            {ReactHtmlParser(question)}
+          </Typography>
+        </div>
 
-      <FormControl component="fieldset" className={classes.choicesContainer}>
-        <Grid container spacing={1}>
+        <Grid container spacing={1} className={classes.choicesContainer}>
           {choices.map((choice) => (
             <Grid item xs={6} key={choice}>
               <ChoiceItem
@@ -86,18 +87,18 @@ const QuizCard = ({ question, choices, no, score, onSubmit }: QuizProps) => {
             </Grid>
           ))}
         </Grid>
-      </FormControl>
 
-      <Button
-        variant="contained"
-        disabled={!selection}
-        onClick={() => handleSubmit()}
-        color="primary"
-        fullWidth
-      >
-        Next Question
-      </Button>
-    </Card>
+        <Button
+          variant="contained"
+          disabled={!selection}
+          onClick={() => handleSubmit()}
+          color="primary"
+          fullWidth
+        >
+          Next Question
+        </Button>
+      </Card>
+    </Slide>
   );
 
   function handleChange(value: string) {
@@ -107,6 +108,9 @@ const QuizCard = ({ question, choices, no, score, onSubmit }: QuizProps) => {
   function handleSubmit() {
     onSubmit(selection);
     setSelection("");
+    setSubmitted(true);
+
+    if (no < 10) setTimeout(() => setSubmitted(false), 500);
   }
 };
 
