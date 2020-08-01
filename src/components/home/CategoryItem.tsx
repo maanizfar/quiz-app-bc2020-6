@@ -7,8 +7,15 @@ const useStyles = makeStyles((theme) => ({
   container: {
     height: "100%",
     padding: theme.spacing(2),
+
     backgroundColor: (props: Props) =>
       props.active ? theme.palette.primary.main : theme.palette.common.white,
+
+    boxShadow: (props: Props) =>
+      props.active ? "none" : "2px 2px 4px 0px rgba(132,88,179,0.4)",
+
+    transform: (props: Props) => (props.active ? "scale(0.99)" : "scale(1)"),
+    transition: "all 0.5s ease-in-out",
 
     borderRadius: theme.spacing(2),
     borderWidth: "2px",
@@ -20,7 +27,8 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
 
     cursor: "pointer",
-    color: (props: Props) => (props.active ? "white" : "black"),
+    color: (props: Props) =>
+      props.active ? "white" : theme.palette.primary.main,
 
     overflow: "hidden",
 

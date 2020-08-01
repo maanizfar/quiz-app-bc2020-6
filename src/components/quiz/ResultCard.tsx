@@ -1,22 +1,26 @@
 import React from "react";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
-import { useHistory } from "react-router";
+
 import { makeStyles } from "@material-ui/core/styles";
-import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-  container: {
-    padding: theme.spacing(4),
+  container: {},
+
+  quizNo: {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.common.white,
+    padding: theme.spacing(1),
   },
 
-  choicesContainer: {
-    marginLeft: theme.spacing(2),
-  },
-
-  btnContainer: {
+  scoreContainer: {
+    height: "100%",
+    minHeight: 180,
     display: "flex",
     justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: theme.palette.secondary.light,
+    color: theme.palette.common.white,
   },
 }));
 
@@ -26,26 +30,17 @@ type Props = {
 
 const ResultCard = ({ score }: Props) => {
   const classes = useStyles();
-  const history = useHistory();
 
   return (
     <Card className={classes.container}>
-      <Typography component="h4" variant="h4" align="center" gutterBottom>
+      <Typography variant="body1" align="center" className={classes.quizNo}>
         Result
       </Typography>
 
-      <Typography variant="h1" align="center" gutterBottom>
-        {score}/10
-      </Typography>
-
-      <div className={classes.btnContainer}>
-        <Button
-          onClick={() => history.push("/")}
-          color="primary"
-          variant="contained"
-        >
-          Home
-        </Button>
+      <div className={classes.scoreContainer}>
+        <Typography component="h2" variant="h2">
+          {score}/10
+        </Typography>
       </div>
     </Card>
   );

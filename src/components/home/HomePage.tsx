@@ -20,6 +20,7 @@ const HomePage = () => {
         variant="h1"
         component="h1"
         align="center"
+        color="primary"
         className={classes.heading}
       >
         Quiz App

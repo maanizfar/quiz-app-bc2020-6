@@ -1,21 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { Typography, Container } from "@material-ui/core";
-
+import { Typography, Container, Button } from "@material-ui/core";
+import { useHistory } from "react-router";
 import QuizCard from "./QuizCard";
 import { shuffleArray } from "../../utils/utils";
 import { Categories } from "../../utils/categories";
 import ResultCard from "./ResultCard";
 
 import { makeStyles } from "@material-ui/core/styles";
+import Loading from "./Loading";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    // backgroundColor: theme.palette.common.white,
+    backgroundColor: theme.palette.background.default,
+    minHeight: "100vh",
   },
 
   heading: {
     marginBottom: theme.spacing(4),
+    paddingTop: theme.spacing(4),
+  },
+
+  btnHome: {
     marginTop: theme.spacing(4),
   },
 }));
@@ -27,6 +33,7 @@ const QuizPage = () => {
 
   const location = useLocation();
   const classes = useStyles();
+  const history = useHistory();
 
   const searchParams = new URLSearchParams(location.search);
 
@@ -46,7 +53,7 @@ const QuizPage = () => {
       });
   }, [endPoint]);
 
-  if (questions.length < 1) return <div>Loading</div>;
+  if (questions.length < 1) return <Loading />;
 
   let question = questions[currentQuestion];
   let choices: string[] = [];
@@ -62,26 +69,42 @@ const QuizPage = () => {
   }
 
   return (
-    <Container maxWidth="md" className={classes.container}>
-      <Typography
-        variant="h3"
-        component="h3"
-        align="center"
-        className={classes.heading}
-      >
-        {getCatergoryName()}
-      </Typography>
-      {currentQuestion > 9 ? (
-        <ResultCard score={score} />
-      ) : (
-        <QuizCard
-          no={currentQuestion + 1}
-          question={question["question"]}
-          choices={choices}
-          onSubmit={handleSubmit}
-        />
-      )}
-    </Container>
+    <main className={classes.container}>
+      <Container maxWidth="md">
+        <Typography
+          variant="h4"
+          component="h4"
+          align="center"
+          color="primary"
+          className={classes.heading}
+        >
+          {getCatergoryName()}
+        </Typography>
+
+        {currentQuestion > 9 ? (
+          <>
+            <ResultCard score={score} />
+            <Button
+              variant="contained"
+              onClick={() => history.push("/")}
+              color="primary"
+              fullWidth
+              className={classes.btnHome}
+            >
+              Go to Home
+            </Button>
+          </>
+        ) : (
+          <QuizCard
+            no={currentQuestion + 1}
+            score={score}
+            question={question["question"]}
+            choices={choices}
+            onSubmit={handleSubmit}
+          />
+        )}
+      </Container>
+    </main>
   );
 
   function handleSubmit(selectedChoice: string) {

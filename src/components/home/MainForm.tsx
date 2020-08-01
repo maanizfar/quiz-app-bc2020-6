@@ -39,7 +39,7 @@ const MainForm = () => {
           className={classes.gridContainer}
           justify="center"
         >
-          <Grid item xs={5} sm={3} md={2}>
+          <Grid item xs={4} sm={3} md={2}>
             <CategoryItem
               label="General Knowledge"
               icon="images/generalknowledge.png"
@@ -48,7 +48,7 @@ const MainForm = () => {
               onClick={handleCategoryChange}
             />
           </Grid>
-          <Grid item xs={5} sm={3} md={2}>
+          <Grid item xs={4} sm={3} md={2}>
             <CategoryItem
               label="Science & Nature"
               icon="images/science.png"
@@ -57,7 +57,7 @@ const MainForm = () => {
               onClick={handleCategoryChange}
             />
           </Grid>
-          <Grid item xs={5} sm={3} md={2}>
+          <Grid item xs={4} sm={3} md={2}>
             <CategoryItem
               label="Computers"
               icon="images/computer.png"
@@ -66,7 +66,7 @@ const MainForm = () => {
               onClick={handleCategoryChange}
             />
           </Grid>
-          <Grid item xs={5} sm={3} md={2}>
+          <Grid item xs={4} sm={3} md={2}>
             <CategoryItem
               label="History"
               icon="images/history.png"
@@ -75,7 +75,7 @@ const MainForm = () => {
               onClick={handleCategoryChange}
             />
           </Grid>
-          <Grid item xs={5} sm={3} md={2}>
+          <Grid item xs={4} sm={3} md={2}>
             <CategoryItem
               label="Music"
               icon="images/music.png"
@@ -84,7 +84,7 @@ const MainForm = () => {
               onClick={handleCategoryChange}
             />
           </Grid>
-          <Grid item xs={5} sm={3} md={2}>
+          <Grid item xs={4} sm={3} md={2}>
             <CategoryItem
               label="Geograpy"
               icon="images/geography.png"
@@ -132,7 +132,7 @@ const MainForm = () => {
       <Button
         variant="contained"
         onClick={handleSubmit}
-        color="secondary"
+        color="primary"
         fullWidth
       >
         Start Quiz
