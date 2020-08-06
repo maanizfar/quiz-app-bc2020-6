@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { Typography, Container, Button } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import { useHistory } from "react-router";
 import QuizCard from "./QuizCard";
 import { shuffleArray } from "../../utils/utils";
@@ -9,6 +9,7 @@ import ResultCard from "./ResultCard";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Loading from "./Loading";
+import TopBar from "../TopBar";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -18,12 +19,19 @@ const useStyles = makeStyles((theme) => ({
   },
 
   heading: {
-    marginBottom: theme.spacing(4),
-    paddingTop: theme.spacing(4),
+    marginBottom: theme.spacing(2),
+    paddingTop: theme.spacing(2),
+  },
+
+  homeBtnContainer: {
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
   },
 
   btnHome: {
     marginTop: theme.spacing(4),
+    minWidth: 140,
   },
 }));
 
@@ -68,30 +76,22 @@ const QuizPage = () => {
   }
 
   return (
-    <main className={classes.container}>
-      <Container maxWidth="md">
-        <Typography
-          variant="h4"
-          component="h4"
-          align="center"
-          color="primary"
-          className={classes.heading}
-        >
-          {getCatergoryName()}
-        </Typography>
-
+    <>
+      <TopBar label={getCatergoryName()} />
+      <main className={classes.container}>
         {currentQuestion > 9 ? (
           <>
             <ResultCard score={score} />
-            <Button
-              variant="contained"
-              onClick={() => history.push("/")}
-              color="primary"
-              fullWidth
-              className={classes.btnHome}
-            >
-              Go to Home
-            </Button>
+            <div className={classes.homeBtnContainer}>
+              <Button
+                variant="contained"
+                onClick={() => history.push("/")}
+                color="primary"
+                className={classes.btnHome}
+              >
+                Go to Home
+              </Button>
+            </div>
           </>
         ) : (
           <QuizCard
@@ -102,8 +102,8 @@ const QuizPage = () => {
             onSubmit={handleSubmit}
           />
         )}
-      </Container>
-    </main>
+      </main>
+    </>
   );
 
   function handleSubmit(selectedChoice: string) {

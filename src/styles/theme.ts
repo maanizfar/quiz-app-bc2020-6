@@ -14,6 +14,9 @@ export const theme = createMuiTheme({
       default: "#ecf0f1",
       paper: "#ecf0f1",
     },
+    error: { main: "#e74c3c" },
+    warning: { main: "#f1c40f" },
+    success: { main: "#2ecc71" },
   },
   typography: {
     h1: {

@@ -10,6 +10,10 @@ import DifficultyButton from "./DifficultyButton";
 import { Container, Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
+  container: {
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(4),
+  },
   formControl: {
     width: "100%",
     marginBottom: theme.spacing(4),
@@ -28,7 +32,7 @@ const MainForm = () => {
   const classes = useStyles();
 
   return (
-    <form>
+    <form className={classes.container}>
       <FormControl component="fieldset" className={classes.formControl}>
         <FormLabel component="legend">Category</FormLabel>
         <Grid

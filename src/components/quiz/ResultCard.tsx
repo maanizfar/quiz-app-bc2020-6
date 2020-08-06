@@ -1,5 +1,4 @@
 import React from "react";
-import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
 import Slide from "@material-ui/core/Slide";
 import { makeStyles } from "@material-ui/core/styles";
@@ -13,11 +12,13 @@ const useStyles = makeStyles((theme) => ({
 
   scoreContainer: {
     height: "100%",
-    minHeight: 180,
+    minHeight: "40vh",
     display: "flex",
+    flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: theme.palette.secondary.light,
+    backgroundColor: (props: Props) =>
+      props.score < 6 ? theme.palette.error.main : theme.palette.success.main,
     color: theme.palette.common.white,
   },
 }));
@@ -27,23 +28,34 @@ type Props = {
 };
 
 const ResultCard = ({ score }: Props) => {
-  const classes = useStyles();
-
+  const classes = useStyles({ score });
   return (
-    <Slide direction="left" in={true} mountOnEnter unmountOnExit>
-      <Card>
-        <Typography variant="body1" align="center" className={classes.heading}>
-          Result
-        </Typography>
+    <div>
+      <Typography variant="body1" align="center" className={classes.heading}>
+        Result
+      </Typography>
 
+      <Slide direction="left" in={true} mountOnEnter unmountOnExit>
         <div className={classes.scoreContainer}>
-          <Typography component="h2" variant="h2">
+          <Typography
+            component="h1"
+            variant="h1"
+            gutterBottom
+            style={{ fontSize: "4rem" }}
+          >
             {score}/10
           </Typography>
+          <Typography variant="h6">{getRemarks(score)}</Typography>
         </div>
-      </Card>
-    </Slide>
+      </Slide>
+    </div>
   );
 };
+
+function getRemarks(score: number) {
+  if (score < 6) return "Try harder";
+  else if (score < 8) return "Good";
+  else return "Excellent";
+}
 
 export default ResultCard;

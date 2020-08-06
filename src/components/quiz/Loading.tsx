@@ -8,6 +8,8 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
     height: "100vh",
+    backgroundColor: theme.palette.secondary.dark,
+    color: theme.palette.common.white,
   },
 }));
 
@@ -16,9 +18,7 @@ const Loading = () => {
 
   return (
     <div className={container}>
-      <Typography variant="subtitle1" color="primary">
-        Loading Questions...
-      </Typography>
+      <Typography variant="subtitle1">Loading Questions...</Typography>
     </div>
   );
 };
