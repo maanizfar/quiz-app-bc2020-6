@@ -84,7 +84,7 @@ const MainForm = () => {
           </Grid>
           <Grid item xs={4} sm={3} md={2}>
             <CategoryItem
-              label="Geograpy"
+              label="Geography"
               icon="images/geography.png"
               category={Categories.Geography}
               active={category === Categories.Geography}
