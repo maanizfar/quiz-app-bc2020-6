@@ -4,6 +4,7 @@ import App from "./App";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { theme } from "./styles/theme";
 import { CssBaseline } from "@material-ui/core";
+import { register as registerSW } from "./swDev";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -14,3 +15,5 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById("root")
 );
+
+registerSW();
